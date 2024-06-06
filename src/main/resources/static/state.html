@@ -1,0 +1,62 @@
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+  <meta name="viewport" content='width=device-width,initial-scale=1.0'> 
+  <title>dev1 - state</title>
+</head> 
+  
+<body> 
+  <h1 style="color:green">State</h1>
+
+  <hr/>
+  <button id="btn-saveState">Salvar Estados</button>
+
+  <hr/>
+  <button id="btn-listState">Listar Estados</button>
+     
+  <hr/> 
+  <h3>Lista</h3>
+   
+  <ul id="listState">
+  </ul>
+
+  <script>
+
+
+	document.querySelector('#btn-saveState').addEventListener('click', e => {
+
+		const ul = document.getElementById('listState');
+	
+		ul.innerHTML = ''
+   
+	    fetch('api/state/save/en').then((res) => {
+	        return alert("salvo com sucesso");
+	      })
+	      .catch((err) => console.debug(err));
+	});
+
+    	document.querySelector('#btn-listState').addEventListener('click', e => {
+
+		const ul = document.getElementById('listState');
+
+		ul.innerHTML = ''
+
+	    fetch('api/state/list/en').then((res) => {
+	        return res.json()
+	      }).then((list) => {
+	         if(list.length <= 0) {
+	          return alert("Lista vazia")
+	         }
+	      	 for (const p of list) {
+	           ul.innerHTML += ('<li>' + p.id + ' - ' + p.title + ' - ' + p.url + '</li>')
+	      	 }
+
+	      })
+	      .catch((err) => console.debug(err));
+	});
+	
+  </script> 
+</body> 
+  
+</html>

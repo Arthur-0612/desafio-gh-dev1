@@ -1,0 +1,45 @@
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+  <meta name="viewport" content='width=device-width,initial-scale=1.0'> 
+  <title>dev1 - person</title> 
+</head> 
+  
+<body> 
+  <h1 style="color:green">Pessoas</h1> 
+
+  <hr/>
+  <button id="btn-list">Listar</button>
+     
+  <hr/> 
+  <h3>Lista</h3>
+   
+  <ul id="list">
+  </ul>
+
+  <script>
+
+
+	document.querySelector('#btn-list').addEventListener('click', e => {
+
+		const ul = document.getElementById('list');
+	
+		ul.innerHTML = ''
+   
+	    fetch('api/person/list').then((res) => {
+	        return res.json() 
+	      }).then((list) => {
+	      
+	      	 for (const p of list) {
+	           ul.innerHTML += ('<li>' + p.id + ' - ' + p.name + '</li>')
+	      	 }
+	      	 
+	      }) 
+	      .catch((err) => console.debug(err));
+	});
+	
+  </script> 
+</body> 
+  
+</html>
